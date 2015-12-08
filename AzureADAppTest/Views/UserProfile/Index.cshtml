@@ -1,0 +1,54 @@
+﻿@using System.Security.Claims
+@using Microsoft.Azure.ActiveDirectory.GraphClient
+@model IEnumerable<IUser>
+
+@{
+    ViewBag.Title = "User Profiles";
+}
+<h2>@ViewBag.Title</h2>
+
+
+@foreach (IUser user in Model)
+{
+
+    <div>
+        <p>
+            <strong>
+                @user.DisplayName
+                @if (@ClaimsPrincipal.Current.FindFirst("http://schemas.microsoft.com/identity/claims/objectidentifier").Value.Equals(@user.ObjectId))
+                {
+                    <span> (Currently logged in)</span>
+                }
+            </strong>
+        </p>
+        <p>
+            FirstName: @user.GivenName
+        </p>
+        <p>
+            LastName: @user.Surname
+        </p>
+        <p>
+            Phone: @user.TelephoneNumber
+        </p>
+    </div>
+}
+
+
+<table class="table table-bordered table-striped">
+
+
+
+
+    @*<tr>
+            <td>Display Name</td>
+            <td>@Model.DisplayName</td>
+        </tr>
+        <tr>
+            <td>First Name</td>
+            <td>@Model.GivenName</td>
+        </tr>
+        <tr>
+            <td>Last Name</td>
+            <td>@Model.Surname</td>
+        </tr>*@
+</table>
